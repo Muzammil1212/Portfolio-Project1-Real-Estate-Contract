@@ -83,7 +83,7 @@ contract Land_Registry {
     */
     function verifySeller(address _sellerAddress) public {
         require(msg.sender == landInspector, "Only Land Inspector can verify seller.");
-        sellers[_sellerAddress].isVerified = true;
+        require(sellers[_sellerAddress].isVerified = true,"Seller registered");
     }
      /**
      * @dev rejectSeller is used to verify   that seller is not  registered.
@@ -94,29 +94,7 @@ contract Land_Registry {
     */
     function rejectSeller(address _sellerAddress) public {
         require(msg.sender == landInspector, "Only Land Inspector can reject seller.");
-        sellers[_sellerAddress].isVerified = false;
-    }
-     /**
-     * @dev verifyLand is used to show that land is verified.
-     * Requirement:
-     * - Only Land Inspector can verify this.
-     * @param _landId- _landId
-     * Return: true (Verified Lnad).
-    */
-    function verifyLand(uint _landId) public {
-        require(msg.sender == landInspector, "Only Land Inspector can verify land.");
-        lands[_landId].isVerified = true;
-    }
-     /** 
-     * @dev rejectLand is used to verify that land isnt  valid.
-     * Requirement:
-     * - Only Land Inspector can verify this.
-     * @param _landId- _landId
-     * Return: false (Seller is not registered).
-    */
-    function rejectLand(uint _landId) public {
-        require(msg.sender == landInspector, "Only Land Inspector can reject land.");
-        lands[_landId].isVerified = false;
+        require(sellers[_sellerAddress].isVerified = false,"Seller not  registered");
     }
     /**
     * @dev addLand is used to add Land details.
@@ -130,11 +108,35 @@ contract Land_Registry {
      * @param _propertyPID- _propertyPID
        
     */
-    function addLand(uint _landId, uint _area, string memory _city, string memory _state, uint _landPrice, uint _propertyPID) public {
+    function addLand(uint _landId, uint _area, string memory _city, string memory _state, uint _landPrice, uint _propertyPID,bool _isVerified) public {
         require(sellers[msg.sender].isVerified == true, "Only verified sellers can add land details.");
-        Land memory newLand = Land(_landId, _area, _city, _state, _landPrice, _propertyPID, msg.sender, false);
+        Land memory newLand = Land(_landId, _area, _city, _state, _landPrice, _propertyPID, msg.sender,_isVerified);
         lands[_landId] = newLand;
     }
+     /**
+     * @dev verifyLand is used to show that land is verified.
+     * Requirement:
+     * - Only Land Inspector can verify this.
+     * @param _landId- _landId
+     * Return: true (Verified Lnad).
+    */
+    function verifyLand(uint _landId) public {
+        require(msg.sender == landInspector, "Only Land Inspector can verify land.");
+        require(lands[_landId].isVerified = true,"Land added previously");
+    }
+     
+     /** 
+     * @dev rejectLand is used to verify that land isnt  valid.
+     * Requirement:
+     * - Only Land Inspector can verify this.
+     * @param _landId- _landId
+     * Return: false (Seller is not registered).
+    */
+    function rejectLand(uint _landId) public {
+        require(msg.sender == landInspector, "Only Land Inspector can reject land.");
+        require(lands[_landId].isVerified = false,"Land  not added previously");
+    }
+   
     /**
     * @dev updateSeller is used to update seller details.
      * Requirement:
