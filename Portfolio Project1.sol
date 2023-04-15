@@ -67,9 +67,10 @@ contract Land_Registry {
      * @param _email -  _email
     
     */
-    function registerSeller(string memory _name, uint _age, string memory _city, string memory _CNIC, string memory _email) public {
+    function registerSeller(string memory _name, uint _age, string memory _city, string memory _CNIC, string memory _email,bool  _isVerified) public {
         require(msg.sender != landInspector, "Land Inspector cannot register as seller.");
-        Seller memory newSeller = Seller(_name, _age, _city, _CNIC, _email, false);
+        require(buyers[msg.sender].verified == false, "Buyer aready registered with the same address");
+        Seller memory newSeller = Seller(_name, _age, _city, _CNIC, _email,_isVerified);
         sellers[msg.sender] = newSeller;
     }
      
@@ -199,8 +200,8 @@ contract Land_Registry {
      * @param _email _email
 
     */
-    function registerBuyer(string memory _name, uint _age, string memory _city, string memory  _cnic, string memory _email) public {
-        buyers[msg.sender] = Buyer(_name, _age, _city, _cnic, _email, false);
+    function registerBuyer(string memory _name, uint _age, string memory _city, string memory  _cnic, string memory _email,bool _verified) public {
+        buyers[msg.sender] = Buyer(_name, _age, _city, _cnic, _email, _verified);
     }
 
     /**
