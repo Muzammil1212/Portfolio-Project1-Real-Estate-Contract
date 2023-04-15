@@ -53,7 +53,7 @@ contract Land_Registry {
     
     constructor() {
         owner = msg.sender;
-        isLandInspector[msg.sender] = true;
+        landInspector=msg.sender;
     }
     
     /**
