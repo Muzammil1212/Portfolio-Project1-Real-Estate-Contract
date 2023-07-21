@@ -1,6 +1,6 @@
 # Portfolio-Project1-Real-Estate-Contract
 Real Estate Contract
-
+Here is detail description of the use case on which this project is created
 Abstract- Real estate in Pakistan as well as in many parts of the world is a very slow
 and cumbersome process. There are also many intermediaries involved in the process of
 land registration. Developing a system that not only accelerates the process of land
