@@ -1,4 +1,4 @@
-# Project Name
+# Real Estate Contract Using Solidity
 
 Brief description or tagline of your project.
 
